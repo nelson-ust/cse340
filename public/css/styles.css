@@ -26,7 +26,7 @@ h1{
 }
 
 nav {
-  background-color: #0077cc;
+  background-color: #5a5555;
 }
 
 nav ul {
@@ -35,6 +35,7 @@ nav ul {
   align-items: center;
   padding: 0.5rem;
   list-style: none;
+  background-color: #5a5555;
 }
 
 nav li {

@@ -8,12 +8,15 @@
  *************************/
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
+const accountRoutes = require("./routes/accountRoutes");
 const errorRoute = require("./routes/errorRoute");  // Added line
 
 const express = require("express");
 const env = require("dotenv").config();
 const expressLayouts = require("express-ejs-layouts");
 const path = require('path');  // Added line
+const cookieParser = require('cookie-parser');
+
 
 const utilities = require('./utilities/index');
 
@@ -26,6 +29,9 @@ app.use(require("./routes/static"));
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(cookieParser());
+
+
 // Index route
 app.get("/", async (req, res, next) => {
   try {
@@ -36,8 +42,18 @@ app.get("/", async (req, res, next) => {
   }
 });
 
+app.get('/favicon.ico', (req, res) => res.status(204));
+
+
+// General error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something went wrong!');
+});
+
 app.use("/inv", inventoryRoute);
-app.use("/error", errorRoute);  // Added line
+app.use('/account', accountRoutes);
+app.use("/error", errorRoute); 
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
@@ -50,6 +66,10 @@ app.use(async (req, res, next) => {
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./layouts/layout"); // not at views root
+
+
+// Apply middleware to check JWT
+app.use(utilities.checkJWTToken);
 
 /* ***********************
 * Express Error Handler

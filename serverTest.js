@@ -21,12 +21,6 @@ const utilities = require('./utilities/index');
 
 const app = express();
 
-
-/* ***********************
- * Flash Messages Middleware
- *************************/
-app.use(flash());
-
 /* ***********************
  * View Engine and Templates
 *************************/
@@ -48,6 +42,10 @@ app.use(session({
   name: 'sessionId',
 }));
 
+/* ***********************
+ * Flash Messages Middleware
+ *************************/
+app.use(flash());
 
 /* ***********************
  * Routes

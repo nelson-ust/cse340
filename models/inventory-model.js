@@ -43,46 +43,5 @@ const getVehicleDetail = async (vehicleId) => {
     throw error; // Re-throw the error for the caller to handle
   }
 };
-/* ***************************
- * Add a new classification
- * ************************** */
-async function addClassification(classificationName) {
-  try {
-    const query = `INSERT INTO public.classification (classification_name) VALUES ($1) RETURNING *`;
-    const result = await pool.query(query, [classificationName]);
-    return result.rows[0];
-  } catch (error) {
-    console.error("Error adding classification: " + error);
-    throw error;
-  }
-}
 
-/* ***************************
- * Add a new inventory item
- * ************************** */
-async function addInventory(inventoryData) {
-  try {
-    const query = `
-      INSERT INTO public.inventory (vehicle_name, classification_id /* other fields */) 
-      VALUES ($1, $2 /* other values */) 
-      RETURNING *`;
-    const values = [
-      inventoryData.vehicleName, 
-      inventoryData.classificationId 
-      /* other values */
-    ];
-    const result = await pool.query(query, values);
-    return result.rows[0];
-  } catch (error) {
-    console.error("Error adding inventory item: " + error);
-    throw error;
-  }
-}
-
-module.exports = { 
-  getClassifications, 
-  getInventoryByClassificationId, 
-  getVehicleDetail, 
-  addClassification, 
-  addInventory 
-};
+module.exports = { getClassifications, getInventoryByClassificationId, getVehicleDetail };

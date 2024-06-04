@@ -1,0 +1,14 @@
+<!-- partials/header.ejs -->
+<header id="top-header">
+  <span class="siteName">
+    <a class="siteName" href="/" title="Return to home page">CSE Motors</a>
+  </span>
+  <div id="tools">
+    <% if (loggedIn) { %>
+      <a class="siteName" title="Click to manage your account" href="/account/management">Welcome Basic</a>
+      <a class="siteName" title="Click to log out" href="/account/logout">Logout</a>
+    <% } else { %>
+      <a class="siteName" title="Click to log in" href="/account/login">My Account</a>
+    <% } %>
+  </div>
+</header>

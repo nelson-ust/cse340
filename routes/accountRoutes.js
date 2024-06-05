@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const accountController = require('../controllers/accountController');
-const regValidate = require('../middlewares/validateRegistration');
+const regValidate = require('../utilities/validateRegistration');
 const utilities = require('../middlewares/utilities');
 
 // Process the login request
